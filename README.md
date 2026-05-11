@@ -236,6 +236,18 @@ ls /dev/tty*
 
 ## Diagramas
 
+![alt text](image-8.png)
+
+**Conexión PIC18F45K22 con PICkit 4**
+
+![alt text](image-9.png)
+
+**Diagrama interno UART**
+
+![alt text](image-10.png)
+
+**Conexión PIC18F45K22 con UART**
+
 ## Evidencias de implementación
 
 
