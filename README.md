@@ -4,6 +4,11 @@
 
 ## Integrantes
 
+* [Laura Alejandra Fuentes Ubaque](https://github.com/LauraAlejandraFuentes)
+* [Juan Sebastian Guerrero Gualteros](https://github.com/juanseguerrerogu07)
+* [Pedro Felipe Jimenez Celis](https://github.com/pedrofejimenezce-ship-it)
+* [Samuel Corro Pedrozo](https://github.com/SamuelCorro)
+
 ## Documentación
 
 ## Diagramas
