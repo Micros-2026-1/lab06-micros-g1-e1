@@ -250,7 +250,9 @@ ls /dev/tty*
 
 ## Evidencias de implementación
 
+[video simulacion uart putty](https://youtu.be/b0C5SD2ICrg)
 
+[video simulacion uart controlable con pot y script pyton](https://youtu.be/IB3nA1PuB9E)
 
 
 
