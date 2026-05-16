@@ -231,9 +231,57 @@ Pueden verificarlo ejecutando en la terminal:
 ls /dev/tty*
 
 
-**EXPLICACIONES DE LOS CODIGOS**
+## EXPLICACIONES DE LOS CODIGOS
 
+    #pragma config FOSC  = INTIO67
+    #pragma config WDTEN = OFF
+    #pragma config LVP   = OFF
+    OSCCON = 0b01110000;
+Usa el oscilador interno a 16 MHz, watchdog apagado, y low voltage programming desactivado.
 
+    static int contador = 0;
+Lleva la cuenta del valor actual que se convierte a voltaje. Empieza en 0 y sube de 5 en 5.
+   
+    UART_Init();
+Configura la comunicación serial para poder enviar datos por UART.
+
+    float voltaje = (contador / 255.0f) * 5.0f;
+    sprintf(buffer, "Voltaje: %.2f\r\n", voltaje);
+    UART_WriteString(buffer);
+Convierte el contador (rango 0–255) a un voltaje equivalente en escala de 0 a 5V, lo formatea como texto y lo manda por UART.
+
+    contador += 5;
+    if (contador > 255) contador = 0;
+    __delay_ms(100);
+Incrementa el contador cada 100 ms y lo reinicia cuando supera 255, simulando un ciclo continuo tipo rampa de voltaje.
+
+    TRISC6 = 0;
+    TRISC7 = 1;
+RC6 como salida (TX) y RC7 como entrada (RX).
+
+    SPBRG1 = 25;
+    TXSTA1bits.BRGH  = 0;
+    BAUDCON1bits.BRG16 = 0;
+Con FOSC = 16 MHz, baja velocidad y generador de 8 bits, el valor 25 en SPBRG1 da exactamente 9600 bps.
+
+    RCSTA1bits.SPEN = 1;
+    TXSTA1bits.SYNC = 0;
+    TXSTA1bits.TXEN = 1;
+    RCSTA1bits.CREN = 1;
+Enciende el serial, modo asíncrono, habilita transmisión y recepción continua.
+
+    while (!TXSTA1bits.TRMT);
+    TXREG1 = data;
+Espera a que el buffer de transmisión esté vacío antes de escribir el nuevo dato, evitando pérdida de datos.
+
+    while (*str) {
+        UART_WriteChar(*str++);
+    }
+Recorre el string carácter por carácter hasta encontrar el \0 final, enviando cada uno por UART.
+
+    sprintf(buffer, "%d\r\n", value);
+    UART_WriteString(buffer);
+Convierte el entero a string con sprintf y lo manda por UART con salto de línea al final.
 ## Diagramas
 
 ![alt text](image-8.png)
